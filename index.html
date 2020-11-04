@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<head>
+  <style>
+    table {
+      text-align: center;
+    }
+    th {
+      border: 2px solid red;
+      padding: 5px;
+      font-weight: bold;
+    }
+
+    td {
+      border: 2px solid blue;
+      padding: 5px;
+      font-weight: bold;
+    }
+
+    #firstTD {
+      border: 2px solid green;
+    }
+
+    .tableDiv {
+        height: 700px;
+        width: 96vw;
+        border: 2px solid black;
+        padding: 10px;
+        overflow: auto;
+    }
+  </style>
+</head>
+<body>
+  <div>
+    <h1>Input the number of columns and rows:</h1>
+    <p>
+      <label>Columns: <input type="number" id="colInput" onchange="setCols(colInput.value)" value='10'/></label>
+    </p>
+    <p>
+      <label>Rows: <input type="number" id="rowInput" onchange="setRows(rowInput.value)" value='10'/></label>
+    </p>
+  </div>
+  <div class='tableDiv'>
+      <table>
+          <thead>
+              <tr id="tableHeader"></tr>
+            </thead>
+            <tbody id="tableBody"></tbody>
+        </table>
+    </div>
+
+  <script>
+    let cols = 10;
+    let rows = 10;
+
+    function makeGridStuff(rows, cols) {
+      const h = document.getElementById("tableHeader");
+      const b = document.getElementById("tableBody");
+
+      h.innerHTML = ''
+      b.innerHTML = ''
+
+      for (let i = 0; i < cols; i++) {
+        const th = document.createElement("th");
+        th.innerText = i + 1;
+        h.appendChild(th);
+      }
+
+      for (let i = 2; i <= rows; i++) {
+        const tr = document.createElement("tr");
+        const firstTD = document.createElement("td");
+        firstTD.setAttribute("id", "firstTD");
+        firstTD.innerText = i;
+
+        tr.appendChild(firstTD);
+        b.appendChild(tr);
+        for (let c = 2; c <= cols; c++) {
+          let td = document.createElement("td");
+
+          td.innerText = i * c;
+
+          tr.append(td);
+        }
+      }
+    }
+
+    function setCols(c) {
+      if (c > 0) {
+        cols = c;
+        makeGridStuff(rows, cols);
+      }
+    }
+
+    function setRows(r) {
+      if (r > 0) {
+        rows = r;
+        makeGridStuff(rows, cols);
+      }
+    }
+
+    makeGridStuff(rows, cols);
+  </script>
+</body>
