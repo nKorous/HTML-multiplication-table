@@ -6,12 +6,14 @@
     }
     th {
       border: 2px solid red;
+      border-radius: 3px;
       padding: 5px;
       font-weight: bold;
     }
 
     td {
       border: 2px solid blue;
+      border-radius: 3px;
       padding: 5px;
       font-weight: bold;
     }
@@ -26,6 +28,11 @@
         border: 2px solid black;
         padding: 10px;
         overflow: auto;
+        border-radius: 5px;
+    }
+
+    .hoverClass:hover {
+        background-color: lightgray ;
     }
   </style>
 </head>
@@ -33,10 +40,10 @@
   <div>
     <h1>Input the number of columns and rows:</h1>
     <p>
-      <label>Columns: <input type="number" id="colInput" onchange="setCols(colInput.value)" value='10'/></label>
+      <label>Columns: <input type="number" id="colInput" onchange="setCols(colInput.value)"/></label>
     </p>
     <p>
-      <label>Rows: <input type="number" id="rowInput" onchange="setRows(rowInput.value)" value='10'/></label>
+      <label>Rows: <input type="number" id="rowInput" onchange="setRows(rowInput.value)"/></label>
     </p>
   </div>
   <div class='tableDiv'>
@@ -49,8 +56,17 @@
     </div>
 
   <script>
-    let cols = 10;
-    let rows = 10;
+    let cols = 12;
+    let rows = 12;
+
+    function setInputDefaultValues() {
+        document.getElementById('colInput').setAttribute('value', cols)
+        document.getElementById('rowInput').setAttribute('value', rows)
+    }
+
+    function cellClick(msg) {
+        alert(msg);
+    }
 
     function makeGridStuff(rows, cols) {
       const h = document.getElementById("tableHeader");
@@ -77,6 +93,9 @@
           let td = document.createElement("td");
 
           td.innerText = i * c;
+          td.onclick = function() {alert(`${i} * ${c} = ${td.innerText}`)}
+          td.style.cursor = 'pointer'
+          td.className = 'hoverClass'
 
           tr.append(td);
         }
@@ -97,6 +116,7 @@
       }
     }
 
+    setInputDefaultValues()
     makeGridStuff(rows, cols);
   </script>
 </body>
